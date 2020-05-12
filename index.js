@@ -12,10 +12,14 @@ try {
     info("Dotenv not found, avoiding");
 }
 const token = process.env.TOKEN;
+if (!token) {
+    error("Telegram token not found!");
+    process.exit(1);
+}
 // Main bot instance
 const bot = new TelegramBot(token, { polling: true });
 // IOS version mentioned
-bot.onText(/(1\d\.\d\.?\d?)/, (msg, match) => {
+bot.onText(/(1\d\.\d\.?\d?)/, async (msg, match) => {
     const chatId = msg.chat.id;
     const full = match[0];
     const examinateVersion = full => {
@@ -34,5 +38,7 @@ bot.onText(/(1\d\.\d\.?\d?)/, (msg, match) => {
     const resultText =
         examinateVersion(full)
         + " Trusted jailbreaks today are checkra.in and unc0ver.dev, other sites can be fake!";
-    bot.sendMessage(chatId, resultText);
+    const message = await bot.sendMessage(chatId, resultText);
+    const deleteMessage = () => bot.deleteMessage(message.chat.id, message.message_id);
+    setTimeout(deleteMessage, 120000);
 });
