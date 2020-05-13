@@ -11,11 +11,11 @@ try {
 } catch (_) {
     info("Dotenv not found, avoiding");
 }
-const token = process.env.TOKEN;
-if (!token) {
+if (!("TOKEN" in process.env)) {
     error("Telegram token not found!");
     process.exit(1);
 }
+const token = process.env.TOKEN;
 // Main bot instance
 const bot = new TelegramBot(token, { polling: true });
 // IOS version mentioned
