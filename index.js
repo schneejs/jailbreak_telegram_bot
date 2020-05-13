@@ -42,3 +42,7 @@ bot.onText(/(1\d\.\d\.?\d?)/, async (msg, match) => {
     const deleteMessage = () => bot.deleteMessage(message.chat.id, message.message_id);
     setTimeout(deleteMessage, 120000);
 });
+// Error handler
+bot.on("error", err => {
+    error("Error: ", err);
+})
