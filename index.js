@@ -16,8 +16,11 @@ if (!("TOKEN" in process.env)) {
     process.exit(1);
 }
 const token = process.env.TOKEN;
+const port = process.env.PORT || 3000;
 // Main bot instance
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token, { webHook: { port: port } });
+const url = `https://jailbreak-telegram-bot.herokuapp.com:${port}`;
+bot.setWebHook(`${url}/bot${token}`);
 // IOS version mentioned
 bot.onText(/(1\d\.\d\.?\d?)/, async (msg, match) => {
     const chatId = msg.chat.id;
