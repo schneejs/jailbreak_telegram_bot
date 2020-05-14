@@ -19,10 +19,9 @@ const token = process.env.TOKEN;
 // Main bot instance
 const bot = new TelegramBot(token, { webHook: { port: process.env.PORT } });
 const url = `https://jailbreak-telegram-bot.herokuapp.com:443`;
-info(`Using ${url}/bot${token}`)
 bot.setWebHook(`${url}/bot${token}`);
 // IOS version mentioned
-bot.onText(/(1\d\.\d\.?\d?)/, async (msg, match) => {
+bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
     const chatId = msg.chat.id;
     const full = match[0];
     const examinateVersion = full => {
@@ -40,10 +39,10 @@ bot.onText(/(1\d\.\d\.?\d?)/, async (msg, match) => {
     }
     const resultText =
         examinateVersion(full)
-        + " Trusted jailbreaks today are checkra.in and unc0ver.dev, other sites can be fake!";
+        + " Trusted jailbreaks today are checkra.in (iPhone X and lower) and unc0ver.dev, other sites can be fake!";
     const message = await bot.sendMessage(chatId, resultText);
     const deleteMessage = () => bot.deleteMessage(message.chat.id, message.message_id);
-    setTimeout(deleteMessage, 120000);
+    setTimeout(deleteMessage, 3600000);
 });
 // Error handler
 bot.on("error", err => {
