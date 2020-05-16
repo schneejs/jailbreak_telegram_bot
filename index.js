@@ -23,6 +23,7 @@ bot.setWebHook(`${url}/bot${token}`);
 // IOS version mentioned
 bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
     const chatId = msg.chat.id;
+    const questionerId = msg.from.id;
     const full = match[0];
     const examinateVersion = full => {
         for (const version of versup) {
@@ -40,9 +41,9 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
     const resultText =
         examinateVersion(full)
         + " Trusted jailbreaks today are checkra.in (iPhone X and lower) and unc0ver.dev, other sites can be fake!";
-    const message = await bot.sendMessage(chatId, resultText);
-    const deleteMessage = () => bot.deleteMessage(message.chat.id, message.message_id);
-    setTimeout(deleteMessage, 3600000);
+    /* const message = */ await bot.sendMessage(chatId, resultText, { reply_to_message_id: questionerId });
+    // const deleteMessage = () => bot.deleteMessage(message.chat.id, message.message_id);
+    // setTimeout(deleteMessage, 3600000);
 });
 // Error handler
 bot.on("error", err => {
