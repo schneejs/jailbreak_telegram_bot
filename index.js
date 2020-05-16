@@ -41,6 +41,8 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
     const resultText =
         examinateVersion(full)
         + " Trusted jailbreaks today are checkra.in (iPhone X and lower) and unc0ver.dev, other sites can be fake!";
+
+    console.log(msg)
     if (questionerId)
         await bot.sendMessage(chatId, resultText, { reply_to_message_id: questionerId });
     else
