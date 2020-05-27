@@ -30,9 +30,9 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
             if (full >= version.from && full <= version.to) {
                 switch (version.state) {
                 case "full":
-                    return `Yes, your IOS version ${full} is fully supported!`
+                    return `Yes, your IOS version ${full} is fully supported! You can use both checkra.in (iPhone X and lower) and unc0ver.dev.`
                 case "a11":
-                    return `Your IOS version ${full} is supported on iPhone X and lower. XR and 11 aren't supported.`;
+                    return `Your IOS version ${full} is supported on iPhone X and lower. XR and 11 aren't supported. You can use checkra.in.`;
                 }
             }
         }
@@ -40,7 +40,7 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
     }
     const resultText =
         examinateVersion(full)
-        + " Trusted jailbreaks today are checkra.in (iPhone X and lower) and unc0ver.dev, other sites can be fake!";
+        + " Other sites can be fake!";
 
     await bot.sendMessage(chatId, resultText, { reply_to_message_id: msgId });
     /* const message = */ 
