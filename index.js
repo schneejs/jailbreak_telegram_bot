@@ -36,7 +36,7 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
                 }
             }
         }
-        return "Unfortunately, your IOS version is not supported.";
+        return `Unfortunately, your IOS version ${full} is not supported.`;
     }
     const resultText =
         examinateVersion(full)
