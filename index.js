@@ -22,6 +22,20 @@ const url = `https://jailbreak-telegram-bot.herokuapp.com:443`;
 bot.setWebHook(`${url}/bot${token}`);
 // IOS version mentioned
 bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
+    const t = msg.text;
+    const triggerWords = [
+        "jailbreak",
+        "jail break",
+        "jb",
+        "phone",
+    ]
+    let has_any_of_these_strings = false;
+    triggerWords.forEach(trig => {
+        if (t.includes(trig))
+            has_any_of_these_strings = true;
+    })
+    if (!has_any_of_these_strings)
+        return;
     const chatId = msg.chat.id;
     const msgId = msg.message_id;
     const full = match[0];
