@@ -31,7 +31,7 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
     ]
     let has_any_of_these_strings = false;
     triggerWords.forEach(trig => {
-        if (t.includes(trig))
+        if (t.toLowerCase().includes(trig))
             has_any_of_these_strings = true;
     })
     if (!has_any_of_these_strings)
