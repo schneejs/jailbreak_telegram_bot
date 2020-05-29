@@ -1,6 +1,6 @@
 {
   "name": "jailbreak_telegram_bot",
-  "version": "1.0.2",
+  "version": "1.1",
   "description": "The bot answers questions about supported IOS versions for jailbreak",
   "main": "index.js",
   "scripts": {
