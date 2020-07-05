@@ -43,10 +43,10 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
         for (const version of versup) {
             if (full >= version.from && full <= version.to) {
                 switch (version.state) {
-                case "full":
-                    return `Yes, your IOS version ${full} is fully supported! You can use both checkra.in (iPhone X and lower) and unc0ver.dev.`
-                case "a11":
-                    return `Your IOS version ${full} is supported on iPhone X and lower. XR and 11 aren't supported. You can use checkra.in.`;
+                    case "full":
+                        return `Yes, your IOS version ${full} is fully supported! You can use both checkra.in (iPhone X and lower) and unc0ver.dev.`
+                    case "a11":
+                        return `Your IOS version ${full} is supported on iPhone X and lower. XR and 11 aren't supported. You can use checkra.in.`;
                 }
             }
         }
@@ -57,7 +57,7 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
         + " Other sites can be fake!";
 
     await bot.sendMessage(chatId, resultText, { reply_to_message_id: msgId });
-    /* const message = */ 
+    /* const message = */
     // const deleteMessage = () => bot.deleteMessage(message.chat.id, message.message_id);
     // setTimeout(deleteMessage, 3600000);
 });
