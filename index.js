@@ -54,7 +54,7 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
     }
     const resultText =
         examinateVersion(full)
-        + " Other sites can be fake!";
+        + " Other sites ARE fake!";
 
     await bot.sendMessage(chatId, resultText, { reply_to_message_id: msgId });
     /* const message = */
