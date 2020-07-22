@@ -46,7 +46,7 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
                     case "full":
                         return `Yes, your IOS version ${full} is fully supported! You can use both checkra.in (iPhone X and lower) and unc0ver.dev.`
                     case "a11":
-                        return `Your IOS version ${full} is supported on iPhone X and lower. XR and 11 aren't supported. You can use checkra.in.`;
+                        return `Your IOS version ${full} is supported on iPhone X and lower. XS and up are not supported. You can use checkra.in.`;
                 }
             }
         }
