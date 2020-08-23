@@ -1,6 +1,6 @@
 const TelegramBot = require("node-telegram-bot-api");
 // Version support database
-const versup = require("./version_support");
+const tools = require("./tools");
 // Simple logging
 const info = (...msgs) => msgs.forEach(msg => console.log(msg));
 const error = (...msgs) => msgs.forEach(msg => console.error(msg));
@@ -22,6 +22,7 @@ const url = `https://jailbreak-telegram-bot.herokuapp.com:443`;
 bot.setWebHook(`${url}/bot${token}`);
 // IOS version mentioned
 bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
+    // TODO: smarter triggering
     const t = msg.text;
     const triggerWords = [
         "jailbreak",
@@ -38,28 +39,31 @@ bot.onText(/(1\d\.\d(\.\d)?)/, async (msg, match) => {
         return;
     const chatId = msg.chat.id;
     const msgId = msg.message_id;
-    const full = match[0];
-    const examinateVersion = full => {
-        for (const version of versup) {
-            if (full >= version.from && full <= version.to) {
-                switch (version.state) {
-                    case "full":
-                        return `Yes, your IOS version ${full} is fully supported! You can use both checkra.in (iPhone X and lower) and unc0ver.dev.`
-                    case "a11":
-                        return `Your IOS version ${full} is supported on iPhone X and lower. XS and up are not supported. You can use checkra.in.`;
-                }
-            }
-        }
-        return `Unfortunately, your IOS version ${full} is not supported. Stay tuned with checkra.in and unc0ver.dev.`;
-    }
-    const resultText =
-        examinateVersion(full)
-        + " Other sites ARE fake!";
+    const version = match[0];
 
-    await bot.sendMessage(chatId, resultText, { reply_to_message_id: msgId });
-    /* const message = */
-    // const deleteMessage = () => bot.deleteMessage(message.chat.id, message.message_id);
-    // setTimeout(deleteMessage, 3600000);
+    const toolsFiltered = tools.filter(tool => {
+        for (const versionRange of tool.versions) {
+            if ((versionRange.from || '') <= version && version <= (versionRange.to || '99.99.99'))
+                return true
+        }
+        return false
+    });
+    const toolsFormatted = toolsFiltered.map(tool =>
+        `- [${tool.name}](${tool.website})${tool.note ? ' - ' + tool.note : ''}`
+    );
+
+    const resultText = ''
+        + (toolsFiltered.length > 0
+            ? `There ${toolsFiltered.length === 1 ? 'is' : 'are'} ${toolsFiltered.length} jailbreak tool${toolsFiltered.length === 1 ? '' : 's'} suggested for IOS ${version}:`
+            : `Unfortunately, your IOS version ${version} is not supported. Please stay tuned with us for future updates!`)
+        + '\n'
+        + toolsFormatted.reduce((accumulator, toolFormatted) => accumulator + '\n' + toolFormatted)
+
+    await bot.sendMessage(chatId, resultText, {
+        reply_to_message_id: msgId,
+        disable_web_page_preview: true,
+        parse_mode: 'Markdown'
+    });
 });
 // Error handler
 bot.on("error", err => {
